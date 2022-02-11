@@ -1,0 +1,39 @@
+{
+  "sender": {
+    "amount": 10000,
+    "currency": "USD"
+  },
+  "recipient": {
+    "amount": 7376,
+    "currency": "GBP"
+  },
+  "rate": {
+    "from": "USD",
+    "to": "GBP",
+    "rate": 0.73765244,
+    "timestamp": 1644537189000
+  },
+  "fxTooltip": "Our exchange fees help cover the cost of exchanging uncommon currencies and the uncertainty of making exchanges while the market is closed. You can find out more in our <feesLink>fees page</feesLink>",
+  "plans": [
+    {
+      "id": "STANDARD",
+      "name": "Standard",
+      "fees": {
+        "fx": {
+          "amount": 0,
+          "currency": "USD"
+        },
+        "total": {
+          "amount": 0,
+          "currency": "USD"
+        },
+        "cost": {
+          "amount": 10000,
+          "currency": "USD"
+        }
+      },
+      "tooltipLong": "No fee added by Revolut",
+      "tooltipShort": "No fees"
+    }
+  ]
+}
