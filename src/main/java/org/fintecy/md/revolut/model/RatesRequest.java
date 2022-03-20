@@ -3,6 +3,8 @@ package org.fintecy.md.revolut.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import static org.fintecy.md.revolut.model.Currency.currency;
+
 public class RatesRequest {
     private final Currency from;
     private final Currency to;
@@ -10,7 +12,7 @@ public class RatesRequest {
     private final boolean isRecipientAmount;
     private final String country;
 
-    public RatesRequest(Currency from, Currency to, BigDecimal amount, boolean isRecipientAmount, String country) {
+    private RatesRequest(Currency from, Currency to, BigDecimal amount, boolean isRecipientAmount, String country) {
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -67,13 +69,21 @@ public class RatesRequest {
     }
 
     public static class RatesRequestBuilder {
-        private Currency from = Currency.currency("USD");
+        private Currency from = currency("USD");
         private Currency to;
         private BigDecimal amount = BigDecimal.valueOf(100_00);
         private boolean isRecipientAmount = false;
         private String country = "GB";
 
         RatesRequestBuilder() {
+        }
+
+        public RatesRequestBuilder from(String currencyPair) {
+            final var split = currencyPair.split("/");
+            if (split.length != 2)
+                throw new IllegalArgumentException("Invalid currency pair");
+            return from(currency(split[0]))
+                    .to(currency(split[1]));
         }
 
         public RatesRequestBuilder from(Currency from) {

@@ -44,10 +44,7 @@ public interface RevolutApi {
     }
 
     default CompletableFuture<ExchangeRate> latest(String pair) {
-        final var split = pair.split("/");
-        if (split.length != 2)
-            throw new IllegalArgumentException("Invalid currency pair");
-        return latest(request().from(currency(split[0])).to(currency(split[1])).build());
+        return latest(request().from(pair).build());
     }
 
 

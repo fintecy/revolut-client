@@ -11,7 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
@@ -21,26 +21,24 @@ public class RevolutClient implements RevolutApi {
     private final String rootPath;
     private final HttpClient client;
     private final ObjectMapper mapper;
-    private final List<Policy<Object>> policies;
+    private final List<Policy<?>> policies;
 
-    protected RevolutClient(String rootPath, ObjectMapper mapper, HttpClient httpClient, List<Policy<Object>> policies) {
+    protected RevolutClient(String rootPath, ObjectMapper mapper, HttpClient httpClient, List<Policy<?>> policies) {
         this.client = checkRequired(httpClient, "Http client required for Revolut client");
         this.mapper = checkRequired(mapper, "object mapper is required for serialization");
         this.rootPath = checkRequired(rootPath, "root path cannot be empty");
         this.policies = ofNullable(policies).orElse(List.of());
     }
 
+    public static RevolutApi managedApi(Policy... policies) {
+        return new RevolutClientBuilder().with(policies).build();
+    }
     public static RevolutApi api() {
         return new RevolutClientBuilder().build();
     }
 
     public static RevolutClientBuilder revolutClient() {
         return new RevolutClientBuilder();
-    }
-
-    public static double checkRequired(double v, String msg) {
-        return (v == 0 ? Optional.<Double>empty() : Optional.of(v))
-                .orElseThrow(() -> new IllegalArgumentException(msg));
     }
 
     public static <T> T checkRequired(T v, String msg) {
@@ -50,7 +48,7 @@ public class RevolutClient implements RevolutApi {
 
     @Override
     public CompletableFuture<ExchangeRate> latest(RatesRequest request) {
-        URI uri = URI.create(rootPath
+        var uri = URI.create(rootPath
                 + "/exchange/quote"
                 + "?country=" + request.getCountry()
                 + "&amount=" + request.getAmount()
@@ -58,7 +56,7 @@ public class RevolutClient implements RevolutApi {
                 + "&toCurrency=" + request.getTo().getCode()
                 + "&isRecipientAmount=" + request.isRecipientAmount()
         );
-        HttpRequest httpRequest = HttpRequest.newBuilder()
+        var httpRequest = HttpRequest.newBuilder()
                 .uri(uri)
                 .build();
 
@@ -73,5 +71,19 @@ public class RevolutClient implements RevolutApi {
         } catch (IOException e) {
             throw new IllegalStateException("Can parse response", e);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        var that = (RevolutClient) o;
+        return Objects.equals(rootPath, that.rootPath)
+                && Objects.equals(policies, that.policies);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rootPath, policies);
     }
 }

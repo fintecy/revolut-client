@@ -8,10 +8,12 @@ import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 class RevolutClientBuilder {
     private ObjectMapper mapper = new ObjectMapper().registerModule(new RevolutModule());
     private HttpClient client = HttpClient.newHttpClient();
-    private List<Policy<Object>> policies = new ArrayList<>();
+    private List<Policy<?>> policies = new ArrayList<>();
     private String rootPath = RevolutApi.ROOT_PATH;
 
     public RevolutClientBuilder useClient(HttpClient client) {
@@ -29,7 +31,12 @@ class RevolutClientBuilder {
         return this;
     }
 
-    public RevolutClientBuilder with(Policy<Object> policy) {
+    public RevolutClientBuilder with(Policy<?>... policies) {
+        this.policies.addAll(asList(policies));
+        return this;
+    }
+
+    public RevolutClientBuilder with(Policy policy) {
         this.policies.add(policy);
         return this;
     }

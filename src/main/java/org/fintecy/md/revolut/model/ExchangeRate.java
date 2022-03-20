@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import static java.math.BigDecimal.valueOf;
+import static java.math.RoundingMode.UP;
 
 public class ExchangeRate {
     private final Currency base;
@@ -13,6 +14,12 @@ public class ExchangeRate {
     private final BigDecimal ask;
     private final BigDecimal bid;
     private final BigDecimal mid;
+
+    public ExchangeRate(Currency base, Currency counter, Instant timestamp,
+                        BigDecimal ask,
+                        BigDecimal bid) {
+        this(base, counter, timestamp, ask, ask.add(bid).divide(valueOf(2), UP), bid);
+    }
 
     public ExchangeRate(Currency base, Currency counter, Instant timestamp,
                         BigDecimal ask,

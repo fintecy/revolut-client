@@ -1,5 +1,9 @@
 package org.fintecy.md.revolut.model;
 
+/**
+ * Data class for representation of currency
+ * Java currency is not supporting crypto, which main reason of using separate class.
+ */
 public class Currency extends MicroType<String> implements Comparable<Currency> {
 
     public Currency(String code) {
@@ -24,6 +28,6 @@ public class Currency extends MicroType<String> implements Comparable<Currency> 
 
     @Override
     public int compareTo(Currency o) {
-        return value.compareTo(o.value);
+        return value.compareTo(o.getValue());
     }
 }
