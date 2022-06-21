@@ -13,6 +13,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static java.util.Optional.ofNullable;
@@ -22,6 +23,10 @@ public class RevolutClient implements RevolutApi {
     private final HttpClient client;
     private final ObjectMapper mapper;
     private final List<Policy<?>> policies;
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        System.out.println(RevolutClient.api().latest("USD/BTC").get().toString());
+    }
 
     protected RevolutClient(String rootPath, ObjectMapper mapper, HttpClient httpClient, List<Policy<?>> policies) {
         this.client = checkRequired(httpClient, "Http client required for Revolut client");
@@ -57,6 +62,7 @@ public class RevolutClient implements RevolutApi {
                 + "&isRecipientAmount=" + request.isRecipientAmount()
         );
         var httpRequest = HttpRequest.newBuilder()
+                .setHeader("accept-language", "en-GB,en-US;q=0.9")
                 .uri(uri)
                 .build();
 
@@ -69,7 +75,7 @@ public class RevolutClient implements RevolutApi {
         try {
             return mapper.readValue(body, ExchangeRate.class);
         } catch (IOException e) {
-            throw new IllegalStateException("Can parse response", e);
+            throw new IllegalStateException("Can parse response: " + e.getMessage(), e);
         }
     }
 

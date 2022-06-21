@@ -52,3 +52,6 @@ var client = revolutClient()
 - Jackson (databind, datatype-jsr310)
 - WireMock (tests)
 - Junit5 (tests)
+
+## Author
+Anton Batiaev <anton@batiaev.com>

@@ -16,11 +16,13 @@ import static org.fintecy.md.revolut.model.RatesRequest.request;
  */
 public interface RevolutApi {
     Set<Currency> SUPPORTED_CURRENCIES = Set.of(//from company website selector
-            currency("GBP"), currency("EUR"), currency("USD"), currency("PLN"), currency("AED"), currency("ALL"),
+            currency("GBP"), currency("EUR"), currency("USD"), currency("BTC"), currency("ETH"), currency("SOL"),
+            currency("AED"), currency("ALL"), currency("ADA"), currency("AMP"), currency("APE"), currency("BAL"),
             currency("AMD"), currency("ANG"), currency("AOA"), currency("ARS"), currency("AUD"), currency("AZN"),
-            currency("BAM"), currency("BBD"), currency("BDT"), currency("BGN"), currency("BHD"), currency("BMD"),
-            currency("BND"), currency("BOB"), currency("BRL"), currency("BSD"), currency("BWP"), currency("BYN"),
-            currency("BZD"), currency("CAD"), currency("CHF"), currency("CLP"), currency("CNH"), currency("CNX"),
+            currency("BAT"), currency("BCH"), currency("BNT"), currency("DOT"), currency("BAM"), currency("BBD"),
+            currency("BDT"), currency("BGN"), currency("BHD"), currency("BMD"), currency("BND"), currency("BOB"),
+            currency("BRL"), currency("BSD"), currency("BWP"), currency("BYN"), currency("BZD"), currency("CHZ"),
+            currency("CLV"), currency("CAD"), currency("CHF"), currency("CLP"), currency("CNH"), currency("CNX"),
             currency("CNY"), currency("COP"), currency("CRC"), currency("CZK"), currency("DJF"), currency("DKK"),
             currency("DOP"), currency("DZD"), currency("EGP"), currency("ETB"), currency("FJD"), currency("FKP"),
             currency("GEL"), currency("GGP"), currency("GHS"), currency("GIP"), currency("GTQ"), currency("GYD"),
@@ -30,14 +32,15 @@ public interface RevolutApi {
             currency("KWD"), currency("KZT"), currency("LAK"), currency("LBP"), currency("LKR"), currency("MAD"),
             currency("MDL"), currency("MKD"), currency("MMK"), currency("MOP"), currency("MUR"), currency("MWK"),
             currency("MXN"), currency("MYR"), currency("MZN"), currency("NAD"), currency("NGN"), currency("NIO"),
-            currency("NOK"), currency("NPR"), currency("NZD"), currency("PEN"), currency("PGK"), currency("PHP"),
-            currency("PKR"), currency("PYG"), currency("QAR"), currency("RON"), currency("RSD"), currency("RUB"),
-            currency("RWF"), currency("SAR"), currency("SEK"), currency("SGD"), currency("THB"), currency("TND"),
-            currency("TRY"), currency("TTD"), currency("TWD"), currency("TZS"), currency("UAH"), currency("UYU"),
-            currency("UZS"), currency("VES"), currency("VND"), currency("VUV"), currency("XAF"), currency("XCD"),
-            currency("XOF"), currency("XPF"), currency("ZAR"), currency("ZMW")
+            currency("NOK"), currency("NPR"), currency("NZD"), currency("PLN"), currency("PEN"), currency("PGK"),
+            currency("PHP"), currency("PKR"), currency("PYG"), currency("QAR"), currency("RON"), currency("RSD"),
+            currency("RUB"), currency("RWF"), currency("SAR"), currency("SEK"), currency("SGD"), currency("THB"),
+            currency("TND"), currency("TRY"), currency("TTD"), currency("TWD"), currency("TZS"), currency("UAH"),
+            currency("UYU"), currency("UZS"), currency("VES"), currency("VND"), currency("VUV"), currency("LTC"),
+            currency("XAF"), currency("XCD"), currency("XOF"), currency("XPF"), currency("XAU"), currency("XAG"),
+            currency("ZAR"), currency("ZMW"), currency("ZRX")
     );
-    String ROOT_PATH = "https://revolut.com/api/";
+    String ROOT_PATH = "https://www.revolut.com/api/";
 
     default CompletableFuture<ExchangeRate> latest(Currency base, Currency counter) {
         return latest(request().from(base).to(counter).build());
