@@ -5,11 +5,11 @@
 Async client with CompletableFutures based on new HttpClient (java 11+)
 
 ## Dependency
-https://mvnrepository.com/artifact/org.fintecy.md/revolut-client/1.0.1
+https://mvnrepository.com/artifact/org.fintecy.md/revolut-client/1.0.2
 
 ### Gradle
 ```
-implementation 'org.fintecy.md:revolut-client:1.0.1'
+implementation 'org.fintecy.md:revolut-client:1.0.2'
 ```
 
 ### Maven
@@ -17,7 +17,7 @@ implementation 'org.fintecy.md:revolut-client:1.0.1'
 <dependency>
 <groupId>org.fintecy.md</groupId>
 <artifactId>revolut-client</artifactId>
-<version>1.0.1</version>
+<version>1.0.2</version>
 </dependency>
 ```
 
