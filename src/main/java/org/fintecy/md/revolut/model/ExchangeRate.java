@@ -49,6 +49,18 @@ public class ExchangeRate {
         return bid;
     }
 
+    public Currency getBase() {
+        return base;
+    }
+
+    public Currency getCounter() {
+        return counter;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,8 +79,8 @@ public class ExchangeRate {
     @Override
     public String toString() {
         return "ExchangeRate{" +
-                "base=" + base +
-                ", counter=" + counter +
+                "pair=" + base.getCode() +
+                "/" + counter.getCode() +
                 ", timestamp=" + timestamp +
                 ", ask=" + ask +
                 ", bid=" + bid +

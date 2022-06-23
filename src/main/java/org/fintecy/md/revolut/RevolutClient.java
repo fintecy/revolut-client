@@ -10,13 +10,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static java.util.Optional.ofNullable;
+import static org.fintecy.md.revolut.model.Currency.currency;
 
 public class RevolutClient implements RevolutApi {
     private final String rootPath;
@@ -25,7 +28,21 @@ public class RevolutClient implements RevolutApi {
     private final List<Policy<?>> policies;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        System.out.println(RevolutClient.api().latest("USD/BTC").get().toString());
+        api()
+                .currencies().thenApply(currencies ->
+                        currencies.stream().map(currency -> {
+                                    try {
+                                        return api().latest(currency, currency("USD")).get();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        return null;
+                                    }
+                                })
+                                .filter(Objects::nonNull)
+                                .collect(Collectors.toList()))
+                .get()
+                .stream()
+                .sorted(Comparator.comparing(ExchangeRate::getTimestamp))
+                .forEach(System.out::println);
     }
 
     protected RevolutClient(String rootPath, ObjectMapper mapper, HttpClient httpClient, List<Policy<?>> policies) {
@@ -38,6 +55,7 @@ public class RevolutClient implements RevolutApi {
     public static RevolutApi managedApi(Policy... policies) {
         return new RevolutClientBuilder().with(policies).build();
     }
+
     public static RevolutApi api() {
         return new RevolutClientBuilder().build();
     }
