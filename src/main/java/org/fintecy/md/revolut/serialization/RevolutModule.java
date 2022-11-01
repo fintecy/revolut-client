@@ -15,7 +15,7 @@ import java.util.Map;
 public class RevolutModule extends SimpleModule {
     public static final String GROUP_ID = "org.fintecy.md";
     public static final String ARTIFACT_ID = "revolut-client";
-    public static final Version VERSION = new Version(1, 0, 3, "SNAPSHOT",
+    public static final Version VERSION = new Version(1, 0, 4, "SNAPSHOT",
             GROUP_ID, ARTIFACT_ID);
 
     public RevolutModule() {
