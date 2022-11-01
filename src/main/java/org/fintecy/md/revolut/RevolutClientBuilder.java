@@ -12,7 +12,9 @@ import static java.util.Arrays.asList;
 
 class RevolutClientBuilder {
     private ObjectMapper mapper = new ObjectMapper().registerModule(new RevolutModule());
-    private HttpClient client = HttpClient.newHttpClient();
+    private HttpClient client = HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.ALWAYS)
+            .build();
     private List<Policy<?>> policies = new ArrayList<>();
     private String rootPath = RevolutApi.ROOT_PATH;
 

@@ -22,7 +22,7 @@ public interface RevolutApi {
             currency("BAT"), currency("BCH"), currency("BNT"), currency("DOT"), currency("BAM"), currency("BBD"),
             currency("BDT"), currency("BGN"), currency("BHD"), currency("BMD"), currency("BND"), currency("BOB"),
             currency("BRL"), currency("BSD"), currency("BWP"), currency("BYN"), currency("BZD"), currency("CHZ"),
-            currency("CLV"), currency("CAD"), currency("CHF"), currency("CLP"), currency("CNH"), currency("CNX"),
+            currency("CLV"), currency("CAD"), currency("CHF"), currency("CLP"), currency("CNH"),
             currency("CNY"), currency("COP"), currency("CRC"), currency("CZK"), currency("DJF"), currency("DKK"),
             currency("DOP"), currency("DZD"), currency("EGP"), currency("ETB"), currency("FJD"), currency("FKP"),
             currency("GEL"), currency("GGP"), currency("GHS"), currency("GIP"), currency("GTQ"), currency("GYD"),
@@ -40,7 +40,7 @@ public interface RevolutApi {
             currency("XAF"), currency("XCD"), currency("XOF"), currency("XPF"), currency("XAU"), currency("XAG"),
             currency("ZAR"), currency("ZMW"), currency("ZRX")
     );
-    String ROOT_PATH = "https://www.revolut.com/api/";
+    String ROOT_PATH = "https://www.revolut.com/api";
 
     default CompletableFuture<ExchangeRate> latest(Currency base, Currency counter) {
         return latest(request().from(base).to(counter).build());

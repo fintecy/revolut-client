@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -18,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
+import static java.util.Comparator.comparing;
 import static java.util.Optional.ofNullable;
 import static org.fintecy.md.revolut.model.Currency.currency;
 
@@ -41,7 +41,7 @@ public class RevolutClient implements RevolutApi {
                                 .collect(Collectors.toList()))
                 .get()
                 .stream()
-                .sorted(Comparator.comparing(ExchangeRate::getTimestamp))
+                .sorted(comparing(ExchangeRate::getTimestamp))
                 .forEach(System.out::println);
     }
 
@@ -72,7 +72,7 @@ public class RevolutClient implements RevolutApi {
     @Override
     public CompletableFuture<ExchangeRate> latest(RatesRequest request) {
         var uri = URI.create(rootPath
-                + "/exchange/quote"
+                + "/exchange/quote/"
                 + "?country=" + request.getCountry()
                 + "&amount=" + request.getAmount()
                 + "&fromCurrency=" + request.getFrom().getCode()
